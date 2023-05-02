@@ -1,7 +1,18 @@
 <?php
 echo "<h1>Hello User Welcome</h1>";
 echo PHP_EOL;
-
+echo $this->tag->linkTo(
+    [
+        'signup',
+        'Signup Here!', 'class' => 'm-3 btn btn-primary'
+    ]
+);
+echo $this->tag->linkTo(
+    [
+        'signup',
+        'Signup Here!', 'class' => 'm-3 btn btn-primary'
+    ]
+);
 echo $this->tag->linkTo(
     [
         'product',

@@ -1,7 +1,7 @@
 <?php
 
 use Phalcon\Mvc\Controller;
-// login controller
+
 class SettingController extends Controller
 {
     public function indexAction()

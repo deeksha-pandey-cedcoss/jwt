@@ -4,7 +4,7 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Events\Manager as EventsManager;
 use MyApp\handle\Aware;
 
-// login controller
+
 class ProductController extends Controller
 {
     public function indexAction()

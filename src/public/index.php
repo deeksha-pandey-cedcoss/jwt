@@ -8,6 +8,10 @@ use Phalcon\Url;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Config;
 use Phalcon\Escaper;
+use Phalcon\Session\Manager;
+use Phalcon\Session\Adapter\Stream;
+use Phalcon\Http\Response\Cookies;
+
 
 $config = new Config([]);
 
@@ -26,7 +30,8 @@ $loader->registerDirs(
 );
 $loader->registerNamespaces(
     [
-        'MyApp\handle' => APP_PATH . '/handler/'
+        'MyApp\handle' => APP_PATH . '/handler/',
+        
     ]
 );
 $loader->registerClasses(
@@ -62,6 +67,29 @@ $container->set(
         return new Escaper();
     }
 );
+$container->setShared(
+    'session',
+    function () {
+        $session = new Manager();
+        $files = new Stream(
+    [
+        'savePath' => '/tmp',
+    ]
+);
+
+$session->setAdapter($files)->start();
+return $session;
+    }
+
+);
+$container->set('cookies', function () {
+    $cookies = new Cookies();
+
+    $cookies->useEncryption(false);
+
+    return $cookies;
+});
+
 
 $container->set(
     'db',
@@ -77,6 +105,20 @@ $container->set(
     }
 );
 $application = new Application($container);
+
+$eventsManager = $container->get('eventsManager');
+$eventsManager->attach(
+    'application:beforeHandleRequest',
+    new Listner()
+);
+$container->set(
+    'EventsManager',
+    $eventsManager
+);
+
+$application = new Application($container);
+
+$application->setEventsManager($eventsManager);
 try {
     // Handle the request
     $response = $application->handle(

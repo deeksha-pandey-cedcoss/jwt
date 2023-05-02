@@ -1,0 +1,32 @@
+<!-- sign up form -->
+<h2>Sign up using this form</h2>
+
+<?php echo $this->tag->form("signup/register"); ?>
+
+<p>
+    <label for="name">Name</label>
+    <?php echo $this->tag->textField(["name", "class" => "form-control"]); ?>
+</p>
+
+<p>
+    <label for="email">E-Mail</label>
+    <?php echo $this->tag->textField(["email", "class" => "form-control"]); ?>
+</p>
+<p>
+    <label for="email">Password</label>
+    <?php echo $this->tag->textField(["password", "class" => "form-control"]); ?>
+</p>
+<p>
+    <label for="role">Choose a Role:</label>
+
+    <select name="role" id="role" class="form-control">
+        <option value="admin">admin</option>
+        <option value="guest">guest</option>
+        <option value="manager">manager</option>
+    </select>
+</p>
+<p>
+    <?php echo $this->tag->submitButton("Register"); ?>
+</p>
+
+</form>
